@@ -1,2 +1,2 @@
-# cinema_ace
+# Cinema Ace
 Database classes final project
