@@ -42,6 +42,5 @@ conn = psycopg2.connect(database = DATABASE_NAME, user = DATABASE_USER, password
 # delete_genero(conn, 11)
 # delete_filme(conn, 8)
 # update_hora_sessao(conn, 2, '01/10/2023 03:00:00')
-# update_filme_id(conn, 5, 666)
 
 conn.close()
