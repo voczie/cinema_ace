@@ -1,10 +1,14 @@
 from read_objects import *
 
+desconto = 0.9
+
 def report_all_sessoes(conn):
     print("Todas as Sessões")
     result = read_all_sessoes(conn)
     
     for i in result:
+        preco_desconto = float(((i[10])[3:]).replace(',', '.')) * desconto #Para lidar com o tipo MONEY do PLSQL
+        preco_desconto = f"{preco_desconto:.2f}".replace('.', ',') #Substituindo o . do float para , (pois faz mais sentido para nós)
         print("*****************************")
         print(f"ID da Sessão: {i[0]}")
         print(f"Filme: {i[1]}")
@@ -15,6 +19,9 @@ def report_all_sessoes(conn):
         print(f"Classificação: {i[6]}")
         print(f"Sala 3D: {i[7]}")
         print(f"Sala VIP: {i[8]}")
+        print(f"Bilhetes Disponíveis: {i[9]}")
+        print(f"Preço Inteiro: {i[10]}")
+        print(f"Preço com Desconto: R$ {preco_desconto}")
         print("*****************************")
 
 def report_sessoes_disponiveis(conn):
@@ -22,6 +29,8 @@ def report_sessoes_disponiveis(conn):
     result = read_sessoes_disponiveis(conn)
     
     for i in result:
+        preco_desconto = float(((i[10])[3:]).replace(',', '.')) * desconto #Para lidar com o tipo MONEY do PLSQL
+        preco_desconto = f"{preco_desconto:.2f}".replace('.', ',') #Substituindo o . do float para , (pois faz mais sentido para nós)
         print("*****************************")
         print(f"ID da Sessão: {i[0]}")
         print(f"Filme: {i[1]}")
@@ -32,6 +41,9 @@ def report_sessoes_disponiveis(conn):
         print(f"Classificação: {i[6]}")
         print(f"Sala 3D: {i[7]}")
         print(f"Sala VIP: {i[8]}")
+        print(f"Bilhetes Disponíveis: {i[9]}")
+        print(f"Preço Inteiro: {i[10]}")
+        print(f"Preço com Desconto: R$ {preco_desconto}")
         print("*****************************")
 
 def report_boxoffice(conn):

@@ -13,7 +13,7 @@ conn = psycopg2.connect(user = DATABASE_USER, password = DATABASE_PASSWORD, port
 conn.autocommit = True
 
 cursor = conn.cursor()
-name_database = "Cinema"
+name_database = "CinemAce"
 
 create_database_sql = f"CREATE database {name_database};"
 

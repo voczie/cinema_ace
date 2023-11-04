@@ -1,5 +1,5 @@
 import psycopg2
-from tables_sqls import tables_sqls
+from db_creation.create_sqls import tables_sqls
 
 import os
 from dotenv import load_dotenv
@@ -16,7 +16,7 @@ conn = psycopg2.connect(database = DATABASE_NAME, user = DATABASE_USER, password
                         host = DATABASE_HOST, port = DATABASE_PORT)
 cursor = conn.cursor()
 
-name_tables = ["filmes", "generos", "generos_filmes", "salas", "sessoes", "bilhetes"]
+name_tables = ["filmes", "generos", "generos_filmes", "salas", "sessoes", "pessoas", "funcionarios", "clientes" "bilhetes"]
 
 for table in name_tables:
     cursor.execute(f"DROP TABLE IF EXISTS {table} CASCADE")

@@ -1,7 +1,7 @@
 import datetime
 
 def read_objects(table_name, conn, only_first = False):
-    table_names = ['filmes', 'generos', 'generos_filme', 'salas', 'sessoes', 'bilhetes']
+    table_names = ['filmes', 'generos', 'generos_filme', 'salas', 'sessoes', 'bilhetes', 'pessoas', 'clientes', 'funcionarios']
     if table_name not in table_names:
         print(f"Tabela {table_name} nao existe")
         return
@@ -33,7 +33,7 @@ def read_filme_by_name(conn, name, exact_name = False):
 def read_all_sessoes(conn):
     cursor = conn.cursor()
 
-    query = "SELECT se.id, fi.nome, se.data, sa.id, se.faixa_audio, se.legenda, fi.faixa_etaria, sa.tridimensional, sa.vip FROM sessoes as se INNER JOIN filmes as fi ON fi.id = se.filme_id INNER JOIN salas as sa ON sa.id = se.numero_sala ORDER BY se.data ASC;"
+    query = "SELECT se.id, fi.nome, se.data, sa.id, se.faixa_audio, se.legenda, fi.faixa_etaria, sa.tridimensional, sa.vip, se.qnt_bilhetes_disponivel, se.preco_inteira  FROM sessoes as se INNER JOIN filmes as fi ON fi.id = se.filme_id INNER JOIN salas as sa ON sa.id = se.numero_sala ORDER BY se.data ASC;"
     cursor.execute(query)
     
     result = cursor.fetchall()
@@ -42,7 +42,7 @@ def read_all_sessoes(conn):
 def read_sessoes_disponiveis(conn):
     cursor = conn.cursor()
 
-    query = "SELECT se.id, fi.nome, se.data, sa.id, se.faixa_audio, se.legenda, fi.faixa_etaria, sa.tridimensional, sa.vip FROM sessoes as se INNER JOIN filmes as fi ON fi.id = se.filme_id INNER JOIN salas as sa ON sa.id = se.numero_sala WHERE se.data > %s ORDER BY se.data ASC;"
+    query = "SELECT se.id, fi.nome, se.data, sa.id, se.faixa_audio, se.legenda, fi.faixa_etaria, sa.tridimensional, sa.vip, se.qnt_bilhetes_disponivel, se.preco_inteira FROM sessoes as se INNER JOIN filmes as fi ON fi.id = se.filme_id INNER JOIN salas as sa ON sa.id = se.numero_sala WHERE se.data > %s ORDER BY se.data ASC;"
 
     cursor.execute(query, (datetime.date.today(),))
     
@@ -69,3 +69,51 @@ def read_boxoffice_by_genero(conn):
 
     result = cursor.fetchall()
     return result
+
+def read_cap_max_sala(conn, num_sala):
+    cursor = conn.cursor()
+
+    query = "SELECT sa.capacidade_maxima FROM salas sa WHERE sa.id = %s"
+    
+    cursor.execute(query, (num_sala,))
+
+    result = cursor.fetchone()
+    return result[0]
+
+def read_qnt_bilhetes_disponivel(conn, id_sessao):
+    cursor = conn.cursor()
+
+    query = "SELECT se.qnt_bilhetes_disponivel FROM sessoes se WHERE se.id = %s"
+
+    cursor.execute(query, (id_sessao,))
+
+    result = cursor.fetchone()
+    return result[0]
+
+def read_flamenguista_onepiece_sousa(conn, id_cliente):
+    cursor = conn.cursor()
+
+    query = "SELECT cli.flamenguista, cli.assiste_onepiece, cli.sousense FROM clientes cli WHERE cli.cpf LIKE %s;"
+
+    cursor.execute(query, (id_cliente,))
+
+    result = cursor.fetchone()
+    return result
+
+def read_preco(conn, id_sessao, desconto = False):
+    cursor = conn.cursor()
+
+    query = "SELECT se.preco_inteira FROM sessoes se WHERE se.id = %s"
+
+    cursor.execute(query, (id_sessao,))
+
+    result = cursor.fetchone()
+
+    if desconto:
+        porcentagem_desconto = 0.9
+        result = float(((result[0])[3:]).replace(',', '.')) * porcentagem_desconto #Para lidar com o tipo MONEY do PLSQL
+        result = f"{result:.2f}".replace('.', ',') #Substituindo o . do float para , (pois faz mais sentido para nós)
+
+    return result
+
+    

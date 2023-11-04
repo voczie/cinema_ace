@@ -23,24 +23,26 @@ print(DATABASE_HOST)
 conn = psycopg2.connect(database = DATABASE_NAME, user = DATABASE_USER, password = DATABASE_PASSWORD,
                         host = DATABASE_HOST, port = DATABASE_PORT)
 
-# result = read_objects('filmes', conn)
-# print(result)
 # create_object_filmes(conn)
-# result = read_movie_by_name(conn, "Monstros")
-# print(result)
-# report_all_sessoes()
-# create_object_sessoes(conn)
-# report_sessoes_disponiveis(conn)
-# report_boxoffice(conn)
-
-# create_object_generos_filmes(conn)
 # create_object_generos(conn)
-# create_object_bilhetes(conn)
-# report_profit_by_genero(conn)
+# create_object_generos_filmes(conn)
+# create_object_pessoas(conn)
+# create_object_salas(conn)
+# create_object_sessoes(conn)
+create_object_bilhetes(conn)
 
-# delete_bilhete(conn, 2)
-# delete_genero(conn, 11)
-# delete_filme(conn, 8)
-# update_hora_sessao(conn, 2, '01/10/2023 03:00:00')
+# result = read_filme_by_name(conn, "Monstro")
+# print(result)
+
+# update_sala_sessao(conn, 13, 3)
+
+# delete_sessao(conn, 9)
+
+# report_all_sessoes(conn)
+# report_boxoffice(conn)
+# report_profit_by_genero(conn)
+# report_sessoes_disponiveis(conn)
+
+# read_flamenguista_onepiece_sousa(conn, "70083172475")
 
 conn.close()

@@ -284,9 +284,7 @@ COPY public.filmes (id, nome, data_estreia, pais_origem, duracao, direcao, faixa
 7	Kill Bill Vol. 1	2004-04-23	Estados Unidos	01:51:00	Quentin Tarantino	+18
 9	Monstros S.A.	2001-11-14	Estados Unidos	01:32:00	Pete Docter	Livre
 10	Universidade Monstros	2013-06-21	Estados Unidos	01:44:00	Dan Scanlon	Livre
-11	Garota Exemplar	2014-10-03	Estados Unidos	02:29:00	David Fincher	14
-12	O Grande Hotel Budapeste	2014-02-06	Alemanha, Estados Unidos	01:39:00	Wes Anderson	14
-13	O Serviço de Entregas da Kiki	1989-07-29	Japao	01:43:00	Hayao Miyazaki	Livre
+11	Garota Exemplar	2014-1regas da Kiki	1989-07-29	Japao	01:43:00	Hayao Miyazaki	Livre
 14	Psicose	1960-06-16	Estados Unidos	01:49:00	Alfred Hitchcock	14
 15	Cinquenta Tons de Cinza	2015-02-11	Estados Unidos	02:08:00	Sam Taylor-Johnson	16
 16	Os Oito Odiados	2015-12-25	Estados Unidos	02:48:00	Quentin Tarantino	18
