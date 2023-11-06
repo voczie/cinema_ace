@@ -29,7 +29,8 @@ conn = psycopg2.connect(database = DATABASE_NAME, user = DATABASE_USER, password
 # create_object_pessoas(conn)
 # create_object_salas(conn)
 # create_object_sessoes(conn)
-create_object_bilhetes(conn)
+# create_object_bilhetes(conn)
+# create_object_view_lista_all_sessoes(conn)
 
 # result = read_filme_by_name(conn, "Monstro")
 # print(result)
@@ -38,7 +39,7 @@ create_object_bilhetes(conn)
 
 # delete_sessao(conn, 9)
 
-# report_all_sessoes(conn)
+report_all_sessoes(conn)
 # report_boxoffice(conn)
 # report_profit_by_genero(conn)
 # report_sessoes_disponiveis(conn)

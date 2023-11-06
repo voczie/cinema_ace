@@ -33,7 +33,7 @@ def read_filme_by_name(conn, name, exact_name = False):
 def read_all_sessoes(conn):
     cursor = conn.cursor()
 
-    query = "SELECT se.id, fi.nome, se.data, sa.id, se.faixa_audio, se.legenda, fi.faixa_etaria, sa.tridimensional, sa.vip, se.qnt_bilhetes_disponivel, se.preco_inteira  FROM sessoes as se INNER JOIN filmes as fi ON fi.id = se.filme_id INNER JOIN salas as sa ON sa.id = se.numero_sala ORDER BY se.data ASC;"
+    query = "SELECT * FROM public.all_sessoes ORDER BY data ASC;"
     cursor.execute(query)
     
     result = cursor.fetchall()
@@ -42,7 +42,7 @@ def read_all_sessoes(conn):
 def read_sessoes_disponiveis(conn):
     cursor = conn.cursor()
 
-    query = "SELECT se.id, fi.nome, se.data, sa.id, se.faixa_audio, se.legenda, fi.faixa_etaria, sa.tridimensional, sa.vip, se.qnt_bilhetes_disponivel, se.preco_inteira FROM sessoes as se INNER JOIN filmes as fi ON fi.id = se.filme_id INNER JOIN salas as sa ON sa.id = se.numero_sala WHERE se.data > %s ORDER BY se.data ASC;"
+    query = "SELECT * FROM public.all_sessoes WHERE data > %s ORDER BY data ASC;"
 
     cursor.execute(query, (datetime.date.today(),))
     
@@ -73,7 +73,7 @@ def read_boxoffice_by_genero(conn):
 def read_cap_max_sala(conn, num_sala):
     cursor = conn.cursor()
 
-    query = "SELECT sa.capacidade_maxima FROM salas sa WHERE sa.id = %s"
+    query = "SELECT sa.capacidade_maxima FROM salas sa WHERE sa.numero_sala = %s"
     
     cursor.execute(query, (num_sala,))
 

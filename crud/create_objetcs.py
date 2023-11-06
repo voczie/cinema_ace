@@ -192,3 +192,12 @@ def create_object_bilhetes(conn):
     update_qnt_bilhetes_disponivel(conn, sessao_id)
     
     conn.commit()
+
+def create_object_view_lista_all_sessoes(conn):
+    cursor = conn.cursor()
+
+    query = '''CREATE OR REPLACE VIEW public.all_sessoes AS SELECT se.id, fi.nome, se.data, sa.numero_sala, se.faixa_audio, se.legenda, fi.faixa_etaria, sa.tridimensional, sa.vip, se.qnt_bilhetes_disponivel, se.preco_inteira  FROM sessoes as se INNER JOIN filmes as fi ON fi.id = se.filme_id INNER JOIN salas as sa ON sa.numero_sala = se.numero_sala ORDER BY se.data ASC;'''
+
+    cursor.execute(query)
+    
+    conn.commit()
