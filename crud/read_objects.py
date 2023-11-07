@@ -49,10 +49,47 @@ def read_sessoes_disponiveis(conn):
     result = cursor.fetchall()
     return result
 
+def read_sessoes_by_preco(conn, low_preco, high_preco):
+    cursor = conn.cursor()
+
+    query = "SELECT * FROM public.all_sessoes WHERE preco_inteira BETWEEN %s::money AND %s::money"
+
+    cursor.execute(query, (low_preco, high_preco,))
+   
+    result = cursor.fetchall()
+    return result
+
+def read_sessoes_by_gravado_mari(conn):
+    cursor = conn.cursor()
+
+    query = "SELECT se.id, fi.nome, se.data, sa.numero_sala, se.faixa_audio, se.legenda, fi.faixa_etaria, sa.tridimensional, sa.vip, se.qnt_bilhetes_disponivel, se.preco_inteira  FROM sessoes as se INNER JOIN filmes as fi ON fi.id = se.filme_id INNER JOIN salas as sa ON sa.numero_sala = se.numero_sala WHERE fi.gravado_mari"
+
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
+
+def read_sessoes_by_categoria(conn, categoria):
+    cursor = conn.cursor()
+
+    query = "SELECT se.id, fi.nome, se.data, sa.numero_sala, se.faixa_audio, se.legenda, fi.faixa_etaria, sa.tridimensional, sa.vip, se.qnt_bilhetes_disponivel, se.preco_inteira  FROM sessoes as se INNER JOIN filmes as fi ON fi.id = se.filme_id INNER JOIN salas as sa ON sa.numero_sala = se.numero_sala INNER JOIN generos_filmes as gf ON fi.id = gf.filme_id WHERE gf.genero ILIKE %s"
+
+    cursor.execute(query, (categoria,))
+    result = cursor.fetchall()
+    return result
+
+def read_least_than_five_bilhetes(conn):
+    cursor = conn.cursor()
+
+    query = "SELECT * FROM public.all_sessoes WHERE qnt_bilhetes_disponivel < 5"
+
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
+
 def read_boxoffice_by_filme(conn):
     cursor = conn.cursor()
 
-    query = "SELECT fi.nome, SUM(bi.valor_compra) FROM bilhetes bi INNER JOIN sessoes se ON bi.sessao_id = se.id INNER JOIN filmes fi ON se.filme_id = fi.id GROUP BY fi.nome ORDER BY SUM(bi.valor_compra) DESC;"
+    query = "SELECT fi.nome, SUM(bi.preco_pago) FROM bilhetes bi INNER JOIN sessoes se ON bi.sessao_id = se.id INNER JOIN filmes fi ON se.filme_id = fi.id GROUP BY fi.nome ORDER BY SUM(bi.preco_pago) DESC;"
 
     cursor.execute(query)
 
@@ -63,7 +100,7 @@ def read_boxoffice_by_filme(conn):
 def read_boxoffice_by_genero(conn):
     cursor = conn.cursor()
 
-    query = "SELECT ge.nome, SUM(bi.valor_compra) FROM bilhetes bi INNER JOIN sessoes se ON bi.sessao_id = se.id INNER JOIN generos_filmes gf ON se.filme_id = gf.filme_id INNER JOIN generos ge ON gf.genero_id = ge.id GROUP BY ge.nome ORDER BY SUM(bi.valor_compra) DESC;"
+    query = "SELECT ge.nome, SUM(bi.preco_pago) FROM bilhetes bi INNER JOIN sessoes se ON bi.sessao_id = se.id INNER JOIN generos_filmes gf ON se.filme_id = gf.filme_id INNER JOIN generos ge ON gf.genero = ge.nome GROUP BY ge.nome ORDER BY SUM(bi.preco_pago) DESC;"
 
     cursor.execute(query)
 
@@ -116,4 +153,12 @@ def read_preco(conn, id_sessao, desconto = False):
 
     return result
 
-    
+def read_sell_by_funcionario(conn):
+    cursor = conn.cursor()
+
+    query = "SELECT pe.nome, SUM(bi.preco_pago) FROM bilhetes AS bi INNER JOIN pessoas AS pe ON bi.funcionario_vendedor_id = pe.cpf GROUP BY pe.nome ORDER BY SUM(bi.preco_pago) DESC"
+
+    cursor.execute(query)
+
+    result = cursor.fetchall()
+    return result

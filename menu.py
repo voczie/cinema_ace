@@ -39,11 +39,14 @@ conn = psycopg2.connect(database = DATABASE_NAME, user = DATABASE_USER, password
 
 # delete_sessao(conn, 9)
 
-report_all_sessoes(conn)
+# report_all_sessoes(conn)
 # report_boxoffice(conn)
 # report_profit_by_genero(conn)
 # report_sessoes_disponiveis(conn)
-
-# read_flamenguista_onepiece_sousa(conn, "70083172475")
+# report_profit_by_funcionario(conn)
+# report_sessoes_por_preco(conn, 12, 25)
+# report_sessoes_por_categoria(conn, 'Acao')
+# report_sessoes_por_filme_gravado_em_mari(conn)
+# report_sessoes_esgotando(conn)
 
 conn.close()

@@ -177,8 +177,16 @@ def create_object_bilhetes(conn):
         preco_pago = read_preco(conn, sessao_id, True)
     else:
         preco_pago = read_preco(conn, sessao_id)
+        preco_pago = preco_pago[0]
 
+    tipos_pagamento = ["pix", "cartao", "boleto","berries"]
     tipo_pagamento = input(f"O valor do bilhete é {preco_pago}. Qual sera a forma de pagamento? \n")
+    if tipo_pagamento.lower() in tipos_pagamento:
+        compra_concluida = '1'
+    else:
+        print("Erro na hora de efetuar a compra")
+        return
+    
     query = (f'''INSERT INTO bilhetes({data_required['Tabela']}) VALUES (%s, %s, %s, %s, %s, %s, %s)''')
     
     try:
@@ -188,9 +196,9 @@ def create_object_bilhetes(conn):
         print(exc)
         conn.rollback()
         return
-    
+
     update_qnt_bilhetes_disponivel(conn, sessao_id)
-    
+
     conn.commit()
 
 def create_object_view_lista_all_sessoes(conn):
