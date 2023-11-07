@@ -134,6 +134,16 @@ def report_sessoes_esgotando(conn):
         print(f"Preço com Desconto: R$ {preco_desconto}")
         print("*****************************")
 
+def report_cliente_compras(conn, cpf_cliente):
+    result = read_cliente_compras(conn, cpf_cliente)
+    print("*****************************")
+
+    compra = 1
+    for i in result:
+        print(f"{(compra)} - Sessão {i[0]} | {i[1]} | {i[2]}")
+        compra += 1
+    print("*****************************")
+
 def report_boxoffice(conn):
     print("Ranking de Bilheteria por Filme")
     result = read_boxoffice_by_filme(conn)

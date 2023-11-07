@@ -107,6 +107,16 @@ def read_boxoffice_by_genero(conn):
     result = cursor.fetchall()
     return result
 
+def read_cliente_compras(conn, cpf_cliente):
+    cursor = conn.cursor()
+
+    query = "SELECT se.id, fi.nome, se.data FROM bilhetes AS bi INNER JOIN sessoes AS se ON bi.sessao_id = se.id INNER JOIN filmes AS fi ON se.filme_id = fi.id WHERE bi.cliente_id = %s"
+
+    cursor.execute(query, (cpf_cliente,))
+
+    result = cursor.fetchall()
+    return result
+
 def read_cap_max_sala(conn, num_sala):
     cursor = conn.cursor()
 
@@ -147,7 +157,7 @@ def read_preco(conn, id_sessao, desconto = False):
     result = cursor.fetchone()
 
     if desconto:
-        porcentagem_desconto = 0.75
+        porcentagem_desconto = 0.9
         result = float(((result[0])[3:]).replace(',', '.')) * porcentagem_desconto #Para lidar com o tipo MONEY do PLSQL
         result = f"{result:.2f}".replace('.', ',') #Substituindo o . do float para , (pois faz mais sentido para nós)
 
