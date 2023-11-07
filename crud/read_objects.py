@@ -107,6 +107,16 @@ def read_boxoffice_by_genero(conn):
     result = cursor.fetchall()
     return result
 
+def read_cliente_compras(conn, cpf_cliente):
+    cursor = conn.cursor()
+
+    query = "SELECT se.id, fi.nome, se.data FROM bilhetes AS bi INNER JOIN sessoes AS se ON bi.sessao_id = se.id INNER JOIN filmes AS fi ON se.filme_id = fi.id WHERE bi.cliente_id = %s"
+
+    cursor.execute(query, (cpf_cliente,))
+
+    result = cursor.fetchall()
+    return result
+
 def read_cap_max_sala(conn, num_sala):
     cursor = conn.cursor()
 

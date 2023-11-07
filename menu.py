@@ -48,5 +48,6 @@ conn = psycopg2.connect(database = DATABASE_NAME, user = DATABASE_USER, password
 # report_sessoes_por_categoria(conn, 'Acao')
 # report_sessoes_por_filme_gravado_em_mari(conn)
 # report_sessoes_esgotando(conn)
+report_cliente_compras(conn, '11649047444')
 
 conn.close()
