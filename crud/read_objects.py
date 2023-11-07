@@ -147,7 +147,7 @@ def read_preco(conn, id_sessao, desconto = False):
     result = cursor.fetchone()
 
     if desconto:
-        porcentagem_desconto = 0.9
+        porcentagem_desconto = 0.75
         result = float(((result[0])[3:]).replace(',', '.')) * porcentagem_desconto #Para lidar com o tipo MONEY do PLSQL
         result = f"{result:.2f}".replace('.', ',') #Substituindo o . do float para , (pois faz mais sentido para nós)
 

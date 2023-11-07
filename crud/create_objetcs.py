@@ -183,6 +183,7 @@ def create_object_bilhetes(conn):
     tipo_pagamento = input(f"O valor do bilhete é {preco_pago}. Qual sera a forma de pagamento? \n")
     if tipo_pagamento.lower() in tipos_pagamento:
         compra_concluida = '1'
+        print("Compra efetuada com sucesso!")
     else:
         print("Erro na hora de efetuar a compra")
         return
